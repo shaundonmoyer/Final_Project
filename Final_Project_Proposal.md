@@ -4,7 +4,7 @@
 Hydraulic fracking fluids are large solutions of chemicals used for recovering oil and gas in unconventional shale plays. The overall usage of specific chemcials in the industry is poorly understood by researchers, however a large database hosted by Fracfocus.org reports hydraulic fracking fluids compositions in a manner that is unorganized and hard to manage. The objective of this project is to develop a script in R to query data from the Fracfoucs registry to report on specific hydraulic fracking fluids used by the industry. The script will also be used to preform statistal analysis on specific ingredients to help understand which ingredients the industry as a whole is preferring to use. The script will be developed to report data from West Virginia specifically on Oxidizers in fracking fluids, however the code will be able to work for any ingredient or area that is reported in the database.
 
 ## Data sources
-The data source that will be used in this project is from an SQL database hosted by Fracfocus.org and can be downloaded #### [here]http://fracfocus.org/data-download. Fracfocus.org is a public repository that hosts information on hydrualic fracking fluids from public disclosures. The database that fracfocus uses is an SQL database and can be locally downloaded as a backup database (or .bak file). The backup database can then be restored using an SQl Server Management Studio application. Once the database is restored, multiple packages in R can be used to query from this database.
+The data source that will be used in this project is from an SQL database hosted by Fracfocus.org and can be downloaded .[here].http://fracfocus.org/data-download. Fracfocus.org is a public repository that hosts information on hydrualic fracking fluids from public disclosures. The database that fracfocus uses is an SQL database and can be locally downloaded as a backup database (or .bak file). The backup database can then be restored using an SQl Server Management Studio application. Once the database is restored, multiple packages in R can be used to query from this database.
 
 ## Languages Used
 The coding language that will be used for this project is R. An application (SQL Server Management Studio) will be used in the data restoration process.
@@ -18,4 +18,4 @@ The expected products from this project is datatables or charts that represent d
 ## Questions for insturctor
 Do you think I can do this (: ?
 Which packages are going to be the most useful R?
-I have done some reading and tried following the information provided #### [Here]https://db.rstudio.com/getting-started/database-queries/ with little luck. I am having trouble connecting R to the database I restored.
+I have done some reading and tried following the information provided #### .[Here].https://db.rstudio.com/getting-started/database-queries/ with little luck. I am having trouble connecting R to the database I restored.
