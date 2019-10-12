@@ -1,3 +1,0 @@
-# Final Project Proposal (Donmoyer)
-
-
