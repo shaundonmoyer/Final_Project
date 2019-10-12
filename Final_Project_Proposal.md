@@ -1,0 +1,19 @@
+# Final Project Proposal (Donmoyer)
+
+## Objectives
+The objective of this project is to integrate the data from the FracFocus registry into R for statistical analysis. A code will be developed that will be able to pull information on a given hydraulic fracking fluid ingredient from any specific state. The code will then be used for analysis on a given ingredient throughout the country.
+
+## Data sources
+The data source that will be used in this project is from an SQL database that can be downloaded here. Fracfocus.org is a public repository that hosts information on hydrualic fracking fluids from public disclosures. The database that fracfocus uses is an SQL database and can be downloaded as a backup database (or .bak file). The backup database can be restored using an SQl Server Management Studio application. Once the database is restored, multiple packages in R can be used to query from this database.
+
+## Languages Used
+This coding language that will be used for this project is R. An application (SQL Server Management Studio) will be used in the data restoration process instead of using R.
+
+## Implementation
+Uses
+
+## Expected Products
+
+## Questions for insturctor
+
+
