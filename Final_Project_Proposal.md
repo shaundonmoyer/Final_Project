@@ -15,7 +15,7 @@ I will use R to develop a working script to pull data on any given hydraulic fra
 ## Expected Products
 The expected products from this project is data tables or charts that represent usage on the ingredients from each category. Also, data tables for any specific ingredient could be made. I am interested in the category oxidizers (also known as breakers) and expect to make a data table that represents which oxidziers are most used in the state of West Virginia and at which concentrations these oxidizers are being used at by the industry.
 
-## Questions for insturctor
+## Questions for instructor
 
 Which packages are going to be the most useful R?
 
