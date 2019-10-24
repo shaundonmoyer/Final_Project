@@ -24,3 +24,14 @@ Ac <- data.table(dbGetQuery(con, "SELECT * FROM RegistryUploadIngredients Where 
 ```{r}
 AMPSF <- data.table(dbGetQuery(con, "SELECT * FROM RegistryUploadIngredients Where IngredientName = 'Ammonium Persulfate';"))
 ```
+
+# All Breakers
+```{r}
+Breaker <- data.table(dbGetQuery(con, "SELECT * FROM RegistryUploadPurpose WHERE Purpose = 'Breaker';"))
+```
+
+# Breaker Trade Name and Frequency
+```{r}
+library(plyr)
+count(Breaker, "TradeName")
+```
