@@ -4,10 +4,13 @@
 
 
 ##RegistryUpload – This table contains each disclosure’s header information such as the job date, API number, location, base water volume, and total vertical depth.
+
 ##RegistryUploadPurpose – This table contains each disclosure’s additive names, suppliers, and the purposes for the additives used.
+
+
 ##RegisryUploadIngredients – This table contains each disclosure’s chemical information, where available, such as the CAS number and the maximum percentages in which they are found in the additive and job
 
-## State <- data.table(dbGetQuery(con, "SELECT * FROM [FracFocusRegistry].[dbo].[RegistryUpload]"))
+
 
 ##Ing <- data.table(dbGetQuery(con, "SELECT * FROM [FracFocusRegistry].[dbo].[RegistryUploadPurpose]"))
 
