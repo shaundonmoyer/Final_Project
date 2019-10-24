@@ -1,0 +1,26 @@
+---
+title: "Final Project"
+author: "Shaun Donmoyer"
+date: "10/23/2019"
+output: html_document
+---
+
+#Connect to database
+```{r}
+con <- dbConnect(odbc(),Driver="SQL Server",Server="localhost\\SQLEXPRESS", Database="FracFocusRegistry", Trusted_Connection="True") 
+```
+
+```{r}
+Ing <- data.table(dbGetQuery(con, "SELECT * FROM [FracFocusRegistry].[dbo].[RegistryUploadPurpose]"))
+```
+
+
+# All Disclosures that include Acetic Acid
+```{r}
+Ac <- data.table(dbGetQuery(con, "SELECT * FROM RegistryUploadIngredients Where IngredientName = 'Acetic Acid';"))
+```
+
+# All Disclosures that include Ammonium Persulfate
+```{r}
+AMPSF <- data.table(dbGetQuery(con, "SELECT * FROM RegistryUploadIngredients Where IngredientName = 'Ammonium Persulfate';"))
+```
