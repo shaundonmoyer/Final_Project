@@ -5,19 +5,26 @@ date: "10/23/2019"
 output: html_document
 ---
 
+# Load appropriate library
+
+```{r}
+library(odbc)
+```
+
 #Connect to database
 ```{r}
 con <- dbConnect(odbc(),Driver="SQL Server",Server="localhost\\SQLEXPRESS", Database="FracFocusRegistry", Trusted_Connection="True") 
 ```
 
+#Retreives all disclosures from Regisitry Upload Purpose
 ```{r}
-Ing <- data.table(dbGetQuery(con, "SELECT * FROM [FracFocusRegistry].[dbo].[RegistryUploadPurpose]"))
+RUP <- data.table(dbGetQuery(con, "SELECT * FROM [FracFocusRegistry].[dbo].[RegistryUploadPurpose]"))
 ```
 
 
 # All Disclosures that include Acetic Acid
 ```{r}
-Ac <- data.table(dbGetQuery(con, "SELECT * FROM RegistryUploadIngredients Where IngredientName = 'Acetic Acid';"))
+Acetic <- data.table(dbGetQuery(con, "SELECT * FROM RegistryUploadIngredients Where IngredientName = 'Acetic Acid';"))
 ```
 
 # All Disclosures that include Ammonium Persulfate
@@ -33,5 +40,5 @@ Breaker <- data.table(dbGetQuery(con, "SELECT * FROM RegistryUploadPurpose WHERE
 # Breaker Trade Name and Frequency
 ```{r}
 library(plyr)
-count(Breaker, "TradeName")
+Br_Freq <- count(Breaker, "TradeName")
 ```
