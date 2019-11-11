@@ -42,3 +42,12 @@ Breaker <- data.table(dbGetQuery(con, "SELECT * FROM RegistryUploadPurpose WHERE
 library(plyr)
 Br_Freq <- count(Breaker, "TradeName")
 ```
+
+```{r}
+br_report <- function(breaker){
+  new_data <- Br_Freq[Br_Freq$freq == "freq", ]
+    return(new_data)
+}
+```  
+  
+
