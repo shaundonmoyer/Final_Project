@@ -44,6 +44,20 @@ Br_Freq <- count(Breaker, "TradeName")
 ```
 
 ```{r}
+top10_Br <- Br_Freq[c(610,578,315,469,374,313,561,452,222,318),]
+```
+
+```{r}
+Br_plot <- qplot(TradeName, freq, data=top10_Br, main="Top 10 most used Breakers in FracFocus", xlab="TradeName", ylab="Frequency")
+```
+
+```{r}
+Br_Plot <- ggplot(top10_Br, aes(x=TradeName, y=freq)) + geom_bar(stat="identity", color="blue",fill="white") + 
++     labs(x="TradeName", y="Frequency",title="10 Most Used Breakers in FracFocus")+geom_text(aes(label=freq), vjust=1.6, color="black", size=3.5)+theme(axis.text.x=element_text(size=10,angle=45,hjust=1,vjust=1))
+```
+
+
+```{r}
 br_report <- function(breaker){
   new_data <- Br_Freq[Br_Freq$freq == "freq", ]
     return(new_data)
