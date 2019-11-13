@@ -53,7 +53,9 @@ Br_plot <- qplot(TradeName, freq, data=top10_Br, main="Top 10 most used Breakers
 
 ```{r}
 Br_Plot <- ggplot(top10_Br, aes(x=TradeName, y=freq)) + geom_bar(stat="identity", color="blue",fill="white") + 
-+     labs(x="TradeName", y="Frequency",title="10 Most Used Breakers in FracFocus")+geom_text(aes(label=freq), vjust=1.6, color="black", size=3.5)+theme(axis.text.x=element_text(size=10,angle=45,hjust=1,vjust=1))
+     labs(x="TradeName", y="Frequency",title="10 Most Used Breakers in FracFocus")+geom_text(aes(label=freq), vjust=1.6, color="black", size=3.5)+theme(axis.text.x=element_text(size=10,angle=45,hjust=1,vjust=1))
+
+Br_Plot
 ```
 
 
