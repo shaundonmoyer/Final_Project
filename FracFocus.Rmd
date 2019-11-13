@@ -60,10 +60,13 @@ Br_Plot
 
 
 ```{r}
-br_report <- function(breaker){
-  new_data <- Br_Freq[Br_Freq$freq == "freq", ]
+br_report <- function(TradeName){
+  new_data <- Breaker[Breaker$TradeName %in% "TradeName", ]
     return(new_data)
 }
 ```  
   
-
+```{r}
+for(Breaker in Breaker){
+  print()
+}
