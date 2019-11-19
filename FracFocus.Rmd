@@ -40,7 +40,7 @@ Breaker <- data.table(dbGetQuery(con, "SELECT * FROM RegistryUploadPurpose WHERE
 # Breaker Trade Name and Frequency
 ```{r}
 library(plyr)
-Br_Freq <- count(Breaker, "TradeName")
+Br_Freq <- count(Breaker, TradeName)
 ```
 
 ```{r}
@@ -86,14 +86,24 @@ Bio_Freq <- count(Bio, "TradeName")
 
 ```{r}
 library(sqldf)
+library(dplyr)
 ```
 
 ```{r}
 Purpose_report <- function(Purpose){
   Purpose <- sqldf('select Purpose, TradeName from RUP where Purpose = "Breaker"')
-  Freq_Purpose <- count(Purpose, "TradeName")
+  Freq_Purpose <- count(Purpose, TradeName)
   return(Freq_Purpose)
 }
 
   
+```
+
+```{r}
+report <- function(Purpose){
+  Purpose <- sqldf('select Purpose, TradeName from RUP where Purpose = "Breaker"')
+  new_data <- Purpose %>% 
+    count(TradeName, sort=TRUE)
+  return(new_data)
+}
 ```
