@@ -71,3 +71,29 @@ for(Breaker in Breaker){
   print()
 }
 ```
+
+
+# Biocide
+```{r}
+Bio <- data.table(dbGetQuery(con, "SELECT * FROM RegistryUploadPurpose WHERE Purpose = 'Biocide';"))
+```
+
+```{r}
+Bio_Freq <- count(Bio, "TradeName")
+```
+
+# Function for any Ingredient Purpose
+
+```{r}
+library(sqldf)
+```
+
+```{r}
+Purpose_report <- function(Purpose){
+  Purpose <- sqldf('select Purpose, TradeName from RUP where Purpose = "Breaker"')
+  Freq_Purpose <- count(Purpose, "TradeName")
+  return(Freq_Purpose)
+}
+
+  
+```
