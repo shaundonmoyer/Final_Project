@@ -99,11 +99,19 @@ Purpose_report <- function(Purpose){
   
 ```
 
+
 ```{r}
 report <- function(Purpose){
   Purpose <- sqldf('select Purpose, TradeName from RUP where Purpose = "Breaker"')
   new_data <- Purpose %>% 
     count(TradeName, sort=TRUE)
-  return(new_data)
+   new_data <- new_data[c(1:10), ]
+
+
+  
+   Br_Plot <- ggplot(new_data, aes(x=TradeName, y=n)) + geom_bar(stat="identity", color="blue",fill="white") + 
+     labs(x="TradeName", y="Frequency",title="10 Most Used Breakers in FracFocus")+geom_text(aes(label=n), vjust=1.6, color="black", size=3.5)+theme(axis.text.x=element_text(size=10,angle=45,hjust=1,vjust=1))
+
+Br_Plot
 }
 ```
