@@ -14,3 +14,5 @@
 
 ##Ing <- data.table(dbGetQuery(con, "SELECT * FROM [FracFocusRegistry].[dbo].[RegistryUploadPurpose]"))
 
+
+Purpose:Breaker, Cross Linker, Biocide, Gelling Agent, Scale Inhibitor 
