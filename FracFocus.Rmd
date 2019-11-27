@@ -180,27 +180,34 @@ pa_base + theme_nothing()+
 ```
 
 
-## Function to summarize any ingredient and plot on box/whisker
+## Function to summarize any ingredient
+
+```{r}
+library(dplyr)
+library(kableExtra)
+```
 
 ```{r}
 RUI <- data.table(dbGetQuery(con, "SELECT [IngredientName],[PercentHFJob] FROM [FracFocusRegistry].[dbo].[RegistryUploadIngredients]"))
 ```
 
+
+
 ```{r}
-Ing_Sum <- function(ingredient){
+ing_report <- function(ingredient){
   
-  data <- RUI[which(RUI$IngredientName == ingredient), "PercentHFJob"]
   
-  sum_data <- data %>%
-    
-    group_by(IngredientName)
+ing_name <- paste(ingredient)
+
+
+  RUI %>%
+  
+  filter(IngredientName == ing_name) %>%
+  
+  summarize(MeanWtPercent = mean(PercentHFJob, na.rm = TRUE), Minimum = min(PercentHFJob, na.rm=TRUE), Maximum = max(PercentHFJob, na.rm = TRUE))
+
 }
 
 ```
 
-```{r}
-RUI %>%
-  filter(IngredientName == "Ammonium Persulfate") %>%
-  summarize(MeanWtPercent = mean(PercentHFJob, na.rm=TRUE))
-  
-```
+
