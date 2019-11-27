@@ -121,6 +121,9 @@ Br_Plot
 }
 ```
 
+
+## This is the funtion for any ingredient purpose and plot its freq as bar plot.
+
 ```{r}
 test <- function(purpose){
   
@@ -141,6 +144,7 @@ test <- function(purpose){
 New_Plot
 }
 ```
+
 
 
 # Lat/Long for all wells in PA
@@ -171,9 +175,32 @@ pa_base <- ggplot(data = pa_county, mapping = aes(x = long, y = lat, group = gro
   geom_polygon(color = "black", fill = "gray")
 pa_base + theme_nothing()+ 
   geom_polygon(data = pa_county, fill = NA, color = "white") +
-  geom_polygon(color = "blue", fill = NA)+ geom_point(data = pa_wells$Latitude, pa_wells$Longitude, color = "red", size = 4)
+  geom_polygon(color = "blue", fill = NA)
 
 ```
 
 
+## Function to summarize any ingredient and plot on box/whisker
 
+```{r}
+RUI <- data.table(dbGetQuery(con, "SELECT [IngredientName],[PercentHFJob] FROM [FracFocusRegistry].[dbo].[RegistryUploadIngredients]"))
+```
+
+```{r}
+Ing_Sum <- function(ingredient){
+  
+  data <- RUI[which(RUI$IngredientName == ingredient), "PercentHFJob"]
+  
+  sum_data <- data %>%
+    
+    group_by(IngredientName)
+}
+
+```
+
+```{r}
+RUI %>%
+  filter(IngredientName == "Ammonium Persulfate") %>%
+  summarize(MeanWtPercent = mean(PercentHFJob, na.rm=TRUE))
+  
+```
