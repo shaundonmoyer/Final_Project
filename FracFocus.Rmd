@@ -187,6 +187,11 @@ library(dplyr)
 library(kableExtra)
 ```
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
 ```{r}
 RUI <- data.table(dbGetQuery(con, "SELECT [IngredientName],[PercentHFJob] FROM [FracFocusRegistry].[dbo].[RegistryUploadIngredients]"))
 ```
@@ -212,8 +217,10 @@ names(ing_summary)[names(ing_summary) == "Quan30"] <- "30th Percentile"
 names(ing_summary)[names(ing_summary) == "Quan50"] <- "50th Percentile"
 names(ing_summary)[names(ing_summary) == "Quan80"] <- "80th Percentile"
 
+table_title <- paste("Ingredient Summary Report for", ing_name)
+
 new_table <- ing_summary %>%
-  kable(digits = 6) %>%
+  kable(digits = 6, caption = table_title, booktabs = TRUE) %>%
   kable_styling()
 
 return(new_table)
