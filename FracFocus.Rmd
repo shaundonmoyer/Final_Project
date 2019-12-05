@@ -196,6 +196,12 @@ knitr::opts_chunk$set(echo = TRUE)
 RUI <- data.table(dbGetQuery(con, "SELECT [IngredientName],[PercentHFJob] FROM [FracFocusRegistry].[dbo].[RegistryUploadIngredients]"))
 ```
 
+```{r}
+new_RUI <- RUI %>%
+  
+  filter(PercentHFJob != "0", PercentHFJob < "30")
+```
+
 
 
 ```{r}
@@ -205,7 +211,7 @@ ing_report <- function(ingredient){
 ing_name <- paste(ingredient)
 
 
-  ing_summary <- RUI %>%
+  ing_summary <- new_RUI %>%
   
   filter(IngredientName == ing_name) %>%
   
@@ -220,7 +226,7 @@ names(ing_summary)[names(ing_summary) == "Quan80"] <- "80th Percentile"
 table_title <- paste("Ingredient Summary Report for", ing_name)
 
 new_table <- ing_summary %>%
-  kable(digits = 6, caption = table_title, booktabs = TRUE) %>%
+  kable(digits = 10, caption = table_title, booktabs = TRUE) %>%
   kable_styling()
 
 return(new_table)
