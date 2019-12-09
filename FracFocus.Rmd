@@ -9,6 +9,7 @@ output: html_document
 
 ```{r}
 library(odbc)
+library(data.table)
 ```
 
 #Connect to database
@@ -22,105 +23,14 @@ RUP <- data.table(dbGetQuery(con, "SELECT * FROM [FracFocusRegistry].[dbo].[Regi
 ```
 
 
-# All Disclosures that include Acetic Acid
-```{r}
-Acetic <- data.table(dbGetQuery(con, "SELECT * FROM RegistryUploadIngredients Where IngredientName = 'Acetic Acid';"))
-```
-
-# All Disclosures that include Ammonium Persulfate
-```{r}
-AMPSF <- data.table(dbGetQuery(con, "SELECT * FROM RegistryUploadIngredients Where IngredientName = 'Ammonium Persulfate';"))
-```
-
-# All Breakers
-```{r}
-Breaker <- data.table(dbGetQuery(con, "SELECT * FROM RegistryUploadPurpose WHERE Purpose = 'Breaker';"))
-```
-
-# Breaker Trade Name and Frequency
-```{r}
-library(plyr)
-Br_Freq <- count(Breaker, TradeName)
-```
-
-```{r}
-top10_Br <- Br_Freq[c(610,578,315,469,374,313,561,452,222,318),]
-```
-
-```{r}
-Br_plot <- qplot(TradeName, freq, data=top10_Br, main="Top 10 most used Breakers in FracFocus", xlab="TradeName", ylab="Frequency")
-```
-
-```{r}
-Br_Plot <- ggplot(top10_Br, aes(x=TradeName, y=freq)) + geom_bar(stat="identity", color="blue",fill="white") + 
-     labs(x="TradeName", y="Frequency",title="10 Most Used Breakers in FracFocus")+geom_text(aes(label=freq), vjust=1.6, color="black", size=3.5)+theme(axis.text.x=element_text(size=10,angle=45,hjust=1,vjust=1))
-
-Br_Plot
-```
-
-
-```{r}
-br_report <- function(TradeName){
-  new_data <- Breaker[Breaker$TradeName %in% "TradeName", ]
-    return(new_data)
-}
-```  
-  
-```{r}
-for(Breaker in Breaker){
-  print()
-}
-```
-
-
-# Biocide
-```{r}
-Bio <- data.table(dbGetQuery(con, "SELECT * FROM RegistryUploadPurpose WHERE Purpose = 'Biocide';"))
-```
-
-```{r}
-Bio_Freq <- count(Bio, "TradeName")
-```
-
 # Function for any Ingredient Purpose
 
 ```{r}
-library(sqldf)
+library(ggplot2)
 library(dplyr)
 ```
 
-```{r}
-Purpose_report <- function(Purpose){
-  Purpose <- sqldf('select Purpose, TradeName from RUP where Purpose = "Breaker"')
-  Freq_Purpose <- count(Purpose, TradeName)
-  return(Freq_Purpose)
-}
-
   
-```
-
-
-```{r}
-report <- function(Purpose){
-  
-   if (!is.character(Purpose)) {
-    stop("Purpose must be a character vector.")
-   }
-  
-  Purpose <- sqldf('select Purpose, TradeName from RUP where Purpose = "Biocide"')
-  new_data <- Purpose %>% 
-    count(TradeName, sort=TRUE)
-   new_data <- new_data[c(1:10), ]
-
-
-  
-   Br_Plot <- ggplot(new_data, aes(x=TradeName, y=n)) + geom_bar(stat="identity", color="blue",fill="white") + 
-     labs(x="TradeName", y="Frequency",title="10 Most Used Biocide in FracFocus")+geom_text(aes(label=n), vjust=1.6, color="black", size=3.5)+theme(axis.text.x=element_text(size=10,angle=45,hjust=1,vjust=1))
-
-Br_Plot
-}
-```
-
 
 ## This is the funtion for any ingredient purpose and plot its freq as bar plot.
 
@@ -145,39 +55,6 @@ New_Plot
 }
 ```
 
-
-
-# Lat/Long for all wells in PA
-
-```{r}
-library("ggplot2")
-library("sf")
-library("rnaturalearth")
-library("rnaturalearthdata")
-library("rgeos")
-library("ggspatial")
-library("maps")
-library("lwgeom")
-library("mapsdata")
-library("ggmap")
-```
-
-```{r}
-pa_wells <- data.table(dbGetQuery(con, "SELECT [Latitude],[Longitude] FROM [FracFocusRegistry].[dbo].[RegistryUpload] Where StateNumber = '37';"))
-```
-
-```{r}
-counties <- map_data("county")
-pa_county <- subset(counties, region == "pennsylvania")
-
-pa_base <- ggplot(data = pa_county, mapping = aes(x = long, y = lat, group = group)) + 
-  coord_fixed(1.3) + 
-  geom_polygon(color = "black", fill = "gray")
-pa_base + theme_nothing()+ 
-  geom_polygon(data = pa_county, fill = NA, color = "white") +
-  geom_polygon(color = "blue", fill = NA)
-
-```
 
 
 ## Function to summarize any ingredient
