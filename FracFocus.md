@@ -45,7 +45,18 @@ Now that the database is retored and is located in SSMS application, it is impor
 
 * RegisryUploadIngredients – This table contains each disclosure’s chemical information, where available, such as the CAS number and the maximum percentages in which they are found in the additive and job.
 
+Give exams of basic queries in SSMS with the FracFocus data using SQL language.
 
+## Connecting R to SSMS
+
+Querying data in SSMS is simple and straight forward, however manipulation of data is not. Using R we will be able to 
+
+First we will need a package that will allow the connection to an Open Database Driver such as our SSMS previousl installed.
+
+```
+install.packages("odbc")
+library(odbc)
+```
 
 
 
