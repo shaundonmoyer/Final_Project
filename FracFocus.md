@@ -18,9 +18,9 @@ For this project the following software and data are needed:
 
 ### Installing and Downloading R and Rstudio
 
-This next paragraph will expain where and how to download and install R and RStudo.
+To get started with this project you will need to download and install R and Rstudio. R is a free open source programming language and Rstudio is the integrated environment that allows code to be written and executed. To download and install the latest version of R and Rstudio for your operating system click here.
 
-### Obtaining SSMS(SQL Server Management Studio)
+### Obtaining SSMS (SQL Server Management Studio)
 
 SSMS is an integrated environment for managing any SQL infrastructure. SSMS provides tools to configure, monitor
 and produce/host instances of an SQL server and databases. To download SSMS, click [here](https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-ver15)
@@ -179,3 +179,18 @@ return(new_table)
 ```
 Include pic of a table.
 
+
+## Deployment/Usage
+
+The results of these functions are applicable for focusing research efforts in the field of hydraulic fraturing. The purpose report function is extremly useful when considering what ingredients are popular in the industry. We can now simply search the most frequently reported TradeName online and in most cases the operator of that ingredient will supply additonal information. For example, we can see above that the most popular breaker reported in the FracFocus registry is the blank. A google search yields this breaker was synthesized by Halliburton and a suite of other information is available. When considering the ingredient report function, this is primarily applicable to my research. When chaning the concentration on a ingredient in my lab created hydraulic fracturing fluid, I can now use this function to see what concentrationa specific ingredient is being used in the industry. This makes designing future experiments much easier and more streamlined.
+
+## Authors
+
+Original work by:
+
+* Shaun Donmoyer (sjd0035@mix.wvu.edu)
+
+
+## Acknowledgments
+
+I would like to thank Dr. Hessl for help trouble shooting code and support throught the project. I would also like to thank my IsoBioGem lab members for suggestions and inspiration for this project.
