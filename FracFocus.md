@@ -83,7 +83,7 @@ con <- dbConnect(odbc(),Driver="SQL Server",Server="your_server_name", Database=
 
 For this function you will need to provide the server name in which you are hosting the SSMS application and then the database in which you would like to connect to, in our case that is the "FracFocusRegistry". Once the connection is successful you will see a connection in the Connections tab in the upper right corner of Rstudio.
 
-![R Connection](Final_Proj_Images/Connection_SC.JPG)
+![R Connection](Final_Proj_Images/Connecntion_SC.JPG)
 
 
 Now that a connection has been established to the FracFoucsRegistry in R through the SSMS application, we can now call in data from the FracFoucsRegistry into R. This can be done using the "dbGetQuery" function from the odbc package. This function uses the connection made from above, inconjuction with the SQL syntax you would use to query data in the SSMS application. Referring back to the 'Acetic Acid' query earlier, to bring those results into R as a data table the following code can be used.
@@ -218,7 +218,7 @@ An example of a table created from the ingredient report function can be seen be
 ing_report("Ammonium Persulfate")
 ```
 
-![AMPSF Table](Final_Proj_Images/Ing_Sum_AMPSF.jpeg)
+![AMPSF Table](Final_Proj_Images/Persulfate_Plot.jpeg)
 
 figure
 
