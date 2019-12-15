@@ -29,7 +29,7 @@ where you will be able to find an SSMS for your needs.
 
 ### Downloading and Restoring FracFocus Database
 
-A replica database of the entire FracFocus registry is available for download as a backup file [Here](http://fracfocus.org/data-download). This data is updated the 15th of every month with the most recent disclosures. The download will contain a backup version of the Microsoft SQL Server 2012 database that provides the same information available through the FracFocus website. Once the database is downloaded, it must be restored (From its backup version to a useable file) using a SQL Server Managment Studio application. FracFocus includes detailed insturctions here on how to restore the backup database.
+A replica database of the entire FracFocus registry is available for download as a backup file [Here](http://fracfocus.org/data-download). This data is updated the 15th of every month with the most recent disclosures. The download will contain a backup version of the Microsoft SQL Server 2012 database that provides the same information available through the FracFocus website. Once the database is downloaded, it must be restored (From its backup version to a useable file) using a SQL Server Managment Studio application. FracFocus includes detailed insturctions here on how to restore the backup database. In general, restoring the database includes importing the backup file into your SSMS and manipulating it by following the specific insturctions linked above.
 
 Since the backup database was created using Microsoft SQL 2012, it is reccommended that the 2012 edition of SQL Server Managment Studio is used to restore the database. To download and install the proper edition of SSMS, follow the instructions found here. 
 
@@ -37,7 +37,7 @@ Explain how the server is a local host on your computer.
 
 #### Structure of the FracFouc Database
 
-Now that the database is retored and is located in SSMS application, it is important to understand how the data is stored. Every disclosure in FracFoucs is composed on three different components of which they are stored in three different tables. The tables that can you will find in the restored database include:
+Now that the database is retored and is located in the SSMS application, it is important to understand how the data is stored. Every disclosure in FracFoucs is composed of three different components all of which are stored in three different tables. The tables that you will find in the restored database include:
 
 * RegistryUpload – This table contains each disclosure’s header information such as the job date, API number, location, base water volume, and total vertical depth.
 
@@ -45,13 +45,18 @@ Now that the database is retored and is located in SSMS application, it is impor
 
 * RegisryUploadIngredients – This table contains each disclosure’s chemical information, where available, such as the CAS number and the maximum percentages in which they are found in the additive and job.
 
-Give exams of basic queries in SSMS with the FracFocus data using SQL language.
+Using the SSMS application you can perform simple queries to sort through the extenisve FracFoucs registry. 
+
+```
+SELECT * FROM [FracFocusRegistry].[dbo].[RegistryUploadIngredients] WHERE IngredientName = 'Acetic Acid'
+```
+The above line of SQL code simply selects the RegistryUploadIngredients table and selects on the results where "Acetic Acid" is used in the IngredientName column. The same syntax can be applied to any table and column for any table in your SSMS to narrow down your data.
 
 ## Connecting R to SSMS
 
-Querying data in SSMS is simple and straight forward, however manipulation of data is not. Using R we will be able to 
+Querying data in SSMS is simple and straight forward, however manipulation of data is not. This is when applying R to your data becomes extremly useful. 
 
-First we will need a package that will allow the connection to an Open Database Driver such as our SSMS previousl installed.
+First we will need a package that will allow the connection to an Open Database Driver. The SSMS application is an Open database driver and the following package will be needed in R.
 
 ```
 install.packages("odbc")
