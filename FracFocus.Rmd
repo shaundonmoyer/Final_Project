@@ -35,7 +35,7 @@ library(dplyr)
 ## This is the funtion for any ingredient purpose and plot its freq as bar plot.
 
 ```{r}
-test <- function(purpose){
+purpose_report <- function(purpose){
   
   if (!is.character(purpose)) {
     stop("Purpose must be a character vector.")

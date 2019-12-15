@@ -8,7 +8,7 @@ The following information will provide you with the proper software and data nee
 
 ### Prerequisites 
 
-For this project the following software and data is needed:
+For this project the following software and data are needed:
 
 * R
 * RStuido
@@ -25,6 +25,8 @@ This next paragraph will expain where and how to download and install R and RStu
 SSMS is an integrated environment for managing any SQL infrastructure. SSMS provides tools to configure, monitor
 and produce/host instances of an SQL server and databases. To download SSMS, click [here](https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-ver15)
 where you will be able to find an SSMS for your needs.
+
+Reposition this section below.
 
 
 ### Downloading and Restoring FracFocus Database
@@ -47,6 +49,8 @@ Now that the database is retored and is located in the SSMS application, it is i
 
 Using the SSMS application you can perform simple queries to sort through the extenisve FracFoucs registry. 
 
+For example:
+
 ```
 SELECT * FROM [FracFocusRegistry].[dbo].[RegistryUploadIngredients] WHERE IngredientName = 'Acetic Acid'
 ```
@@ -54,7 +58,7 @@ The above line of SQL code simply selects the RegistryUploadIngredients table an
 
 ## Connecting R to SSMS
 
-Querying data in SSMS is simple and straight forward, however manipulation of data is not. This is when applying R to your data becomes extremly useful. 
+Querying data in SSMS is simple and straight forward, however manipulation of data is not. This is when applying R to your data becomes useful. 
 
 First we will need a package that will allow the connection to an Open Database Driver. The SSMS application is an Open database driver and the following package will be needed in R.
 
@@ -70,8 +74,9 @@ con <- dbConnect(odbc(),Driver="SQL Server",Server="your_server_name", Database=
 
 For this function you will need to provide the server name in which you are hosting the SSMS application and then the database in which you would like to connect to, in our case that is the "FracFocusRegistry". Once the connection is successful you will see a connection in the Connections tab in the upper right corner of Rstudio.
 
+Include pic of above.
 
-Now that a connection has been established to the FracFoucsRegistry in R through the SSMS application, we can now call in data from the FracFoucsRegistry into R. This can be done using the "dbGetQuery" function from the odbc package. This function uses the connection made above inconjuction with the SQL syntax you would use to query data in the SSMS application. Referring back to the 'Acetic Acid' query earlier, to bring those results into R as a data table the following code can be used.
+Now that a connection has been established to the FracFoucsRegistry in R through the SSMS application, we can now call in data from the FracFoucsRegistry into R. This can be done using the "dbGetQuery" function from the odbc package. This function uses the connection made from above, inconjuction with the SQL syntax you would use to query data in the SSMS application. Referring back to the 'Acetic Acid' query earlier, to bring those results into R as a data table the following code can be used.
 
 
 First install the data.table package
@@ -84,6 +89,11 @@ library(data.table)
 AceticAcid <- data.table(dbGetQuery(con, "SELECT * FROM RegistryUploadIngredients Where IngredientName = 'Acetic Acid';"))
 ```
 
-The same results we yielded earlier as a query in the SSMS application, is now a data table in your global environment in R. The dbGetQuery function allows you query data directly from your SSMS and allocate the data into R.
+The same results we yielded earlier as a query in the SSMS application, is now a data table in your global environment in R. The dbGetQuery function allows you to query data directly from your SSMS and allocate the data into R.
+
+
+## Creating Functions to summarize the FracFocus data
+
+
 
 
