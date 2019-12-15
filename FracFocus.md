@@ -127,6 +127,8 @@ New_Plot
 ```
 An example below can be seen:
 
+![Breaker Plot](/Breaker_Plot.jpeg)
+
 
 ### Ingredient report function
 
