@@ -125,9 +125,25 @@ purpose_report <- function(purpose){
 New_Plot
 }
 ```
-An example below can be seen:
+Usage
+
+```
+purpose_report("enter purpose here")
+```
+
+
+An example of a plot created from the Purpose Report Function can be seen below:
+
+
+```
+purpose_report("Breaker")
+```
+
 
 ![Breaker Plot](/Breaker_Plot.jpeg)
+
+
+The above plot yeilds the 10 most used Breakers from the reported in the FracFocus registry. We can see that the "Vicon NF Breaker" is the most popular used Breaker as it is reported over 8600 times.
 
 
 ### Ingredient report function
