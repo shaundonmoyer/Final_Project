@@ -41,6 +41,11 @@ Explain how the server is a local host on your computer.
 
 Now that the database is retored and is located in the SSMS application, it is important to understand how the data is stored. Every disclosure in FracFoucs is composed of three different components all of which are stored in three different tables. The tables that you will find in the restored database include:
 
+The tables are located on the left side of the SSMS application:
+
+![SSMS Tables](/SSMS_Table_SC.JPG)
+
+
 * RegistryUpload – This table contains each disclosure’s header information such as the job date, API number, location, base water volume, and total vertical depth.
 
 * RegistryUploadPurpose – This table contains each disclosure’s additive names, suppliers, and the purposes for the additives used.
@@ -54,6 +59,10 @@ For example:
 ```
 SELECT * FROM [FracFocusRegistry].[dbo].[RegistryUploadIngredients] WHERE IngredientName = 'Acetic Acid'
 ```
+Result of example above:
+
+![Query SC](Query_SC.JPG)
+
 The above line of SQL code simply selects the RegistryUploadIngredients table and selects on the results where "Acetic Acid" is used in the IngredientName column. The same syntax can be applied to any table and column for any table in your SSMS to narrow down your data.
 
 ## Connecting R to SSMS
@@ -74,7 +83,8 @@ con <- dbConnect(odbc(),Driver="SQL Server",Server="your_server_name", Database=
 
 For this function you will need to provide the server name in which you are hosting the SSMS application and then the database in which you would like to connect to, in our case that is the "FracFocusRegistry". Once the connection is successful you will see a connection in the Connections tab in the upper right corner of Rstudio.
 
-Include pic of above.
+![R Connection](/Connection_SC.JPG)
+
 
 Now that a connection has been established to the FracFoucsRegistry in R through the SSMS application, we can now call in data from the FracFoucsRegistry into R. This can be done using the "dbGetQuery" function from the odbc package. This function uses the connection made from above, inconjuction with the SQL syntax you would use to query data in the SSMS application. Referring back to the 'Acetic Acid' query earlier, to bring those results into R as a data table the following code can be used.
 
@@ -195,7 +205,21 @@ return(new_table)
   
 }
 ```
-Include pic of a table.
+
+Usage:
+
+```
+ing_report("name of ingredient")
+```
+
+An example of a table created from the ingredient report function can be seen below.
+
+```
+ing_report("Ammonium Persulfate")
+```
+
+![AMPSF Table](/Ing_Sum_AMPSF.jpeg)
+
 
 
 ## Deployment/Usage
