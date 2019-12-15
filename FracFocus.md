@@ -94,6 +94,88 @@ The same results we yielded earlier as a query in the SSMS application, is now a
 
 ## Creating Functions to summarize the FracFocus data
 
+### Purpose report function
+
+One of the main objectives of this project is to get an understanding of what ingredients the industry is using in thier hydraulic fracturing fluids. To do this data from the RegistryUploadPurpose table was used. This table lists an ingredients "TradeName" or name used in industry along with the purpose this ingredient serves. A function was developed in which a specific purpose can be reported on that includes the 10 most used "TradeNames" associated with that purpose.
+
+To do this, first the entire RegistryUploadPurpose table was brought into R and formatted as a data table.
+
+```
+RUP <- data.table(dbGetQuery(con, "SELECT * FROM [FracFocusRegistry].[dbo].[RegistryUploadPurpose]"))
+```
+Next a function was created that in summary, compiles all data that matches the Purpose wanted. Then the function counts how many times a TradeName is repeated for that specific purpose, sorts the TradeNames in descending order and then retrieves only the top 10 results. The function ends by plotting the results nicely in a bar graph.
+
+```
+purpose_report <- function(purpose){
+  
+  if (!is.character(purpose)) {
+    stop("Purpose must be a character vector.")
+   }
+  
+  
+  data <- RUP[which(RUP$Purpose == purpose), "TradeName" ]
+  count_data <- data %>% 
+    count(TradeName, sort = TRUE)
+  count_data <- count_data[c(1:10), ]
+    
+  plot_title <- paste("10 most used", purpose, "in FracFocus")
+    New_Plot <- ggplot(count_data, aes(x=TradeName, y=n)) + geom_bar(stat="identity", color="blue",fill="white") + 
+     labs(x="TradeName", y="Frequency",title=plot_title) +geom_text(aes(label=n), vjust=1.6, color="black", size=3.5)+theme(axis.text.x=element_text(size=10,angle=45,hjust=1,vjust=1))
+
+New_Plot
+}
+```
+An example below can be seen:
 
 
+### Ingredient report function
+
+The next objective of this project is to understand the composition of an ingredient being used in a hydraulic fracturing job. To do this data from the RegistryUploadIngredient table was used. This table contains a column of data that reports the weight percentage of an ingredient that was used for one disclosure of a hydraulic fracturing job. This column of data is named PercentHFJob in the RegistryUploadIngredient table. A function was created that can summarize the usage of any ingredient.
+
+First, the RegistryUploadIngredient table was brought into R this time only selecting the IngredientName and PercentHFJob columns.
+
+```
+RUI <- data.table(dbGetQuery(con, "SELECT [IngredientName],[PercentHFJob] FROM [FracFocusRegistry].[dbo].[RegistryUploadIngredients]")
+```
+
+Then data was filtered to exclude values in the PercentHFJob column that are equal to 0 and greater than 30. Explain why.
+
+```
+new_RUI <- RUI %>%
+  
+  filter(PercentHFJob != "0", PercentHFJob < "30")
+```
+
+Finally a function was developed that in summary, compliles all values from the PercentHFJob column that match the ingredient name entered into the function. The fucntion then performs anlaysis that reports the mean weight percentage, minimum value, maxium value, a series of percentiled vaules and finally counts how many data vaules that matched the ingredient name was used to calculate these values. The function then reports this data in a data table.
+
+```
+ing_report <- function(ingredient){
+  
+  
+ing_name <- paste(ingredient)
+
+
+  ing_summary <- new_RUI %>%
+  
+  filter(IngredientName == ing_name) %>%
+  
+  summarize(MeanWtPercent = mean(PercentHFJob, na.rm = TRUE), Minimum = min(PercentHFJob, na.rm=TRUE), Maximum = max(PercentHFJob, na.rm = TRUE), Count = n(), Quan10 = quantile(PercentHFJob, .1, na.rm = TRUE), Quan30 = quantile(PercentHFJob, .3, na.rm =TRUE), Quan50 = quantile(PercentHFJob, .5, na.rm = TRUE), Quan80 = quantile(PercentHFJob, .8, na.rm = TRUE))
+
+names(ing_summary)[names(ing_summary) == "MeanWtPercent"] <- "Mean Wt %"
+names(ing_summary)[names(ing_summary) == "Quan10"] <- "10th Percentile"
+names(ing_summary)[names(ing_summary) == "Quan30"] <- "30th Percentile"
+names(ing_summary)[names(ing_summary) == "Quan50"] <- "50th Percentile"
+names(ing_summary)[names(ing_summary) == "Quan80"] <- "80th Percentile"
+
+table_title <- paste("Ingredient Summary Report for", ing_name)
+
+new_table <- ing_summary %>%
+  kable(digits = 10, caption = table_title, booktabs = TRUE) %>%
+  kable_styling()
+
+return(new_table)
+  
+}
+```
+Include pic of a table.
 
