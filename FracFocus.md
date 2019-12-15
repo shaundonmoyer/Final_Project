@@ -62,7 +62,28 @@ First we will need a package that will allow the connection to an Open Database 
 install.packages("odbc")
 library(odbc)
 ```
+Now we can use the dbConnect function in this package to connect R to our SSMS application. 
+
+```
+con <- dbConnect(odbc(),Driver="SQL Server",Server="your_server_name", Database="FracFocusRegistry", Trusted_Connection="True")
+```
+
+For this function you will need to provide the server name in which you are hosting the SSMS application and then the database in which you would like to connect to, in our case that is the "FracFocusRegistry". Once the connection is successful you will see a connection in the Connections tab in the upper right corner of Rstudio.
 
 
+Now that a connection has been established to the FracFoucsRegistry in R through the SSMS application, we can now call in data from the FracFoucsRegistry into R. This can be done using the "dbGetQuery" function from the odbc package. This function uses the connection made above inconjuction with the SQL syntax you would use to query data in the SSMS application. Referring back to the 'Acetic Acid' query earlier, to bring those results into R as a data table the following code can be used.
+
+
+First install the data.table package
+```
+install.packages("data.table")
+library(data.table)
+```
+
+```
+AceticAcid <- data.table(dbGetQuery(con, "SELECT * FROM RegistryUploadIngredients Where IngredientName = 'Acetic Acid';"))
+```
+
+The same results we yielded earlier as a query in the SSMS application, is now a data table in your global environment in R. The dbGetQuery function allows you query data directly from your SSMS and allocate the data into R.
 
 
