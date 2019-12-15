@@ -220,7 +220,7 @@ ing_report("Ammonium Persulfate")
 
 ![AMPSF Table](/Ing_Sum_AMPSF.jpeg)
 
-
+figure
 
 ## Deployment/Usage
 
