@@ -53,7 +53,7 @@ The tables that you will find in the restored FracFocus database include:
 
 Using the SSMS application you can perform simple queries to sort through the extenisve FracFoucs registry. 
 
-For example:
+For example: To obtain all the disclosures that contain the ingredient "Acetic Acid" use the line of code below.
 
 ```
 SELECT * FROM [FracFocusRegistry].[dbo].[RegistryUploadIngredients] WHERE IngredientName = 'Acetic Acid'
@@ -62,7 +62,7 @@ Result of example above:
 
 ![Query SC](Final_Proj_Images/Query_SC.JPG)
 
-The above line of SQL code simply selects the RegistryUploadIngredients table and selects on the results where "Acetic Acid" is matched in the IngredientName column. The same syntax can be applied to any table and column for any table in your SSMS to narrow down your data.
+The above line of SQL code simply calls the RegistryUploadIngredients table and selects on the results where "Acetic Acid" is matched in the IngredientName column. The same syntax can be applied to any query any specific data from any of the three data tables available in the FracFocus Registry.
 
 ## Connecting R to SSMS
 
@@ -80,7 +80,7 @@ Now we can use the dbConnect function in this package to connect R to our SSMS a
 con <- dbConnect(odbc(),Driver="SQL Server",Server="your_server_name", Database="FracFocusRegistry", Trusted_Connection="True")
 ```
 
-For this function you will need to provide the server name in which you are hosting the SSMS application and then the database in which you would like to connect to, in our case that is the "FracFocusRegistry". Once the connection is successful you will see a connection in the Connections tab in the upper right corner of Rstudio.
+For this function you will need to provide the server name in which you are hosting the SSMS application (varies by setup of the SSMS application) and then the database in which you would like to connect to, in our case that is the "FracFocusRegistry". Once the connection is successful you will see a connection in the Connections tab in the upper right corner of Rstudio.
 
 ![R Connection](Final_Proj_Images/Connecntion_SC.JPG)
 
@@ -104,11 +104,11 @@ AceticAcid <- data.table(dbGetQuery(con, "SELECT * FROM RegistryUploadIngredient
 The same results we yielded earlier as a query in the SSMS application, is now a data table in your global environment in R. The dbGetQuery function allows you to query data directly from your SSMS and allocate the data into R.
 
 
-## Creating Functions to summarize the FracFocus data
+## Creating Functions to summarize and manipulate FracFocus data
 
 ### Purpose report function
 
-One of the main objectives of this project is to get an understanding of what ingredients the industry is using in thier hydraulic fracturing fluids. To do this data from the RegistryUploadPurpose table was used. This table lists an ingredients "TradeName" or name used in industry along with the purpose this ingredient serves. A function was developed in which a specific purpose can be reported on that includes the 10 most used "TradeNames" associated with that purpose.
+One of the main objectives of this project is to get an understanding of what ingredients the industry is using in their hydraulic fracturing fluids. To do this data from the RegistryUploadPurpose table was used. This table lists an ingredients "TradeName" or name used in industry along with the purpose this ingredient serves. A function was developed in which a specific purpose can be reported on that includes the 10 most used "TradeNames" associated with that purpose.
 
 To do this, first the entire RegistryUploadPurpose table was brought into R and formatted as a data table.
 
@@ -155,7 +155,7 @@ purpose_report("Breaker")
 ![Breaker Plot](Final_Proj_Images/Breaker_Plot.jpeg)
 
 
-The above plot yeilds the 10 most used Breakers reported in the FracFocus registry. We can see that the "Vicon NF Breaker" is the most popular used Breaker as it is reported over 8600 times. This function can be used to report on any ingredient purpose (Sclaing Inhibitor, Friction Reducer, Biocide, Gelling Agent, etc...)
+The above plot yeilds the 10 most used Breakers reported in the FracFocus registry. We can see that the "Vicon NF Breaker" is the most reported Breaker as it is disclosed over 8600 times. This function can be used to report on any ingredient purpose (Sclaing Inhibitor, Friction Reducer, Biocide, Gelling Agent, etc...).
 
 
 ### Ingredient report function
@@ -168,7 +168,7 @@ First, the RegistryUploadIngredient table was brought into R this time only sele
 RUI <- data.table(dbGetQuery(con, "SELECT [IngredientName],[PercentHFJob] FROM [FracFocusRegistry].[dbo].[RegistryUploadIngredients]")
 ```
 
-Then data was filtered to exclude values in the PercentHFJob column that are equal to 0 and greater than 30. A value of 0 was excluded from the dataset so a "true" minimum value could be retrieved. Also, values exceeding 30 weight percent were excluded because values over 30 weight percent are unrealistic in the industry (besides water). 
+Then data was filtered to exclude values in the PercentHFJob column that are equal to 0 and greater than 30. A value of 0 was excluded from the dataset so a "true" minimum value could be retrieved. Also, values exceeding 30 weight percent were excluded because values over 30 weight percent are unrealistic for our research needs. 
 
 ```
 new_RUI <- RUI %>%
@@ -222,11 +222,11 @@ ing_report("Ammonium Persulfate")
 
 ![AMPSF Table](Final_Proj_Images/Persulfate_Plot.jpeg)
 
-We can see from the figure produced by the function that the mean weight percent of Ammonium Persulfate in a hydraulic fracturing job is 0.009% with a maximum value of 2.87%. Over 26,000 entries of Ammonium Persulfate were used to calculate these values. Any ingredient that is used in a hydraulic fracturing fluid solution can be entered into this function for a summary report.
+We can see from the figure produced by the function that the mean weight percent of Ammonium Persulfate in a hydraulic fracturing job is 0.009% with a maximum value of 2.87%. Over 26,000 entries of Ammonium Persulfate were used to calculate these values. Any ingredient (Acetic Acid, Hydrochloric Acid, Soidum Chloride, etc...) that is used in a hydraulic fracturing fluid solution can be entered into this function for a summary report.
 
 ## Deployment/Usage
 
-The results of these functions are applicable for focusing research efforts in the field of hydraulic fraturing. The purpose report function is extremly useful when considering what ingredients are popular in the industry. We can now simply search the most frequently reported TradeName online and in most cases the operator of that ingredient will supply additonal information. For example, we can see above that the most popular breaker reported in the FracFocus registry is Vicon NF Breaker. A google search yields this breaker was synthesized by Halliburton and a suite of other information is available. When considering the ingredient report function, this is primarily applicable to my research. My research includes synthesizing batches of hydraulic fracturing fluid for various experiments. When chaning the concentration of an ingredient in my fracturing fluid, I can now use this function to see what concentrationa a specific ingredient is being used in the industry. This makes designing future experiments much easier and more streamlined.
+The results of these functions are applicable for focusing research efforts in the field of hydraulic fracturing. The purpose report function is extremly useful when considering what ingredients are popular in the industry. We can now simply search the most frequently reported TradeName (produced from the purpose report function) online and in most cases the operator of that ingredient will supply additonal information. For example, we can see above that the most disclosed breaker reported in the FracFocus registry is the Vicon NF Breaker. A google search yields this breaker was synthesized by Halliburton and a suite of other information is available on this specific breaker. When considering the ingredient report function, this is primarily applicable to my research. My research includes synthesizing batches of hydraulic fracturing fluid for various fluid rock experiments. When changing the concentration of an ingredient in my fracturing fluid, I can now use this function to see what concentrationa a specific ingredient is being used in the industry. This makes designing future experiments much easier and more streamlined.
 
 ## Authors
 
