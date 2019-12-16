@@ -5,34 +5,33 @@ date: "10/23/2019"
 output: html_document
 ---
 
-# Load appropriate library
+# Load all packages needed for this project
 
 ```{r}
 library(odbc)
 library(data.table)
+library(knitr)
+library(dplyr)
+library(ggplot2)
+library(kableExtra)
 ```
 
-#Connect to database
+
+# First a connection to database must be made
 ```{r}
 con <- dbConnect(odbc(),Driver="SQL Server",Server="localhost\\SQLEXPRESS", Database="FracFocusRegistry", Trusted_Connection="True") 
-```
-
-#Retreives all disclosures from Regisitry Upload Purpose
-```{r}
-RUP <- data.table(dbGetQuery(con, "SELECT * FROM [FracFocusRegistry].[dbo].[RegistryUploadPurpose]"))
 ```
 
 
 # Function for any Ingredient Purpose
 
+# Retreive all disclosures from Regisitry Upload Purpose Table
 ```{r}
-library(ggplot2)
-library(dplyr)
+RUP <- data.table(dbGetQuery(con, "SELECT * FROM [FracFocusRegistry].[dbo].[RegistryUploadPurpose]"))
 ```
 
-  
 
-## This is the funtion for any ingredient purpose and plot its freq as bar plot.
+# This is the funtion for any ingredient purpose and plot its freq as bar plot.
 
 ```{r}
 purpose_report <- function(purpose){
@@ -57,22 +56,24 @@ New_Plot
 
 
 
-## Function to summarize any ingredient
 
-```{r}
-library(dplyr)
-library(kableExtra)
-```
 
+
+# Function to summarize any ingredients concentration
+
+
+# Setup knitr options
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-
+# Retrieve RegistryUploadIngredient tabel, only IngredientName and PercentHFJob columns
 ```{r}
 RUI <- data.table(dbGetQuery(con, "SELECT [IngredientName],[PercentHFJob] FROM [FracFocusRegistry].[dbo].[RegistryUploadIngredients]"))
 ```
 
+
+# Filter out data equal to 0 and greater than 30
 ```{r}
 new_RUI <- RUI %>%
   
@@ -80,6 +81,7 @@ new_RUI <- RUI %>%
 ```
 
 
+# This function reports a summary of information on the weight percent of any ingredient used in a hydraulic fracturing job
 
 ```{r}
 ing_report <- function(ingredient){
