@@ -1,6 +1,6 @@
 # Manipulating FracFocus Data using R
 
-Hydraulic fracking fluids are large solutions of chemicals used for recovering oil and gas in unconventional shale plays. The overall usage of specific chemicals in the industry is poorly understood by researchers, however a large database hosted by [Fracfocus.org](http://fracfocus.org/) reports hydraulic fracking fluid compositions in a manner that is unorganized and hard to sort through. The objective of this project is to develop a script in R to query data from the Fracfocus registry to report on specific hydraulic fracking chemicals used by the industry. The script will also be used to perform statistal analysis on specific ingredients to help understand which ingredients the industry as a whole is preferring to use along with the concentrations these chemicals are used during a hydraulic fracturing job. 
+Hydraulic fracking fluids are large solutions of chemicals used for recovering oil and gas in unconventional shale plays. The overall usage of specific chemicals in the industry is poorly understood by researchers, however a large database hosted by [Fracfocus.org](http://fracfocus.org/) reports hydraulic fracking fluid compositions in a manner that is unorganized and hard to sort through. The objective of this project is to develop a script in R to query data from the Fracfocus registry to report on specific hydraulic fracking chemicals used by the industry. The script will also be used to perform statistal analysis on specific ingredients to help understand which ingredients the industry as a whole is preferring to use along with the specific concentrations of chemicals used during a hydraulic fracturing job. 
 
 ## Getting Started
 
@@ -18,15 +18,15 @@ For this project the following software and data are needed:
 
 ### Installing and Downloading R and Rstudio
 
-To get started with this project you will need to download and install R and Rstudio. R is a free open source programming language and Rstudio is the integrated environment that allows code to be written and executed. To download and install the latest version of R [Here](https://www.r-project.org/) and Rstudio [Here](https://rstudio.com/) for your operating system.
+To get started with this project you will need to download and install R and Rstudio. R is a free open source programming language and Rstudio is the integrated environment that allows code to be written and executed. To download and install the latest version of R click [Here](https://www.r-project.org/) and Rstudio click [Here](https://rstudio.com/) for your operating system.
 
 
 
 ### Downloading and Restoring FracFocus Database
 
-A replica database of the entire FracFocus registry is available for download as a backup file [Here](http://fracfocus.org/data-download). This data is updated the 15th of every month with the most recent disclosures. The download will contain a backup version of the Microsoft SQL Server 2012 database that provides the same information available through the FracFocus website. Once the database is downloaded, it must be restored (from its backup version to a useable file) using a SQL Server Managment Studio application. FracFocus includes detailed insturctions [Here](http://fracfocus.org/sites/default/files/file-attachments/fracfocus-sqltoexcel.pdf) on how to restore the backup database. In general, restoring the database includes importing the backup file into the SQL Server Management Stuido application and manipulating it by following the specific insturctions linked above.
+A replica database of the entire FracFocus registry is available for download as a backup file [Here](http://fracfocus.org/data-download). This data is updated the 15th of every month with the most recent disclosures. The download will contain a backup version of the Microsoft SQL Server 2012 database that provides the same information available through the FracFocus website. Once the database is downloaded, it must be restored (from its backup version to a useable file) using a SQL Server Managment Studio application. FracFocus includes detailed instructions [Here](http://fracfocus.org/sites/default/files/file-attachments/fracfocus-sqltoexcel.pdf) on how to restore the backup database. In general, restoring the database includes importing the backup file into the SQL Server Management Stuido application and manipulating it by following the specific instructions linked above.
 
-Since the backup database was created using Microsoft SQL 2012, it is reccommended that the 2012 edition of SQL Server Managment Studio is used to restore the database. To download and install the proper edition of SSMS, follow the instructions found in the Obtaining SSMS section below. 
+Since the backup database was created using Microsoft SQL 2012, it is recommended that the 2012 edition of SQL Server Managment Studio is used to restore the database. To download and install the proper edition of SSMS, follow the instructions found in the Obtaining SSMS section below. 
 
 
 ### Obtaining SSMS (SQL Server Management Studio)
@@ -37,7 +37,7 @@ and produce/host instances of an SQL server and databases. To download the 2012 
 
 #### Structure of the FracFouc Database
 
-Now that the database is retored and is located in the SSMS application, it is important to understand how the data is stored. Every disclosure in FracFoucs is composed of three different components all of which are stored in three different tables. 
+Now that the database is restored and is located in the SSMS application, it is important to understand how the data is stored. Every disclosure in FracFocus is composed of three different components all of which are stored in three different tables. 
 
 The tables are located on the left side of the SSMS application:
 
@@ -62,7 +62,7 @@ Result of example above:
 
 ![Query SC](Final_Proj_Images/Query_SC.JPG)
 
-The above line of SQL code simply calls the RegistryUploadIngredients table and selects on the results where "Acetic Acid" is matched in the IngredientName column. The same syntax can be applied to any query any specific data from any of the three data tables available in the FracFocus Registry.
+The above line of SQL code simply calls the RegistryUploadIngredients table and selects on the results where "Acetic Acid" is matched in the IngredientName column. The same syntax can be applied to query any specific data from any of the three data tables available in the FracFocus Registry.
 
 ## Connecting R to SSMS
 
@@ -80,12 +80,12 @@ Now we can use the dbConnect function in this package to connect R to our SSMS a
 con <- dbConnect(odbc(),Driver="SQL Server",Server="your_server_name", Database="FracFocusRegistry", Trusted_Connection="True")
 ```
 
-For this function you will need to provide the server name in which you are hosting the SSMS application (varies by setup of the SSMS application) and then the database in which you would like to connect to, in our case that is the "FracFocusRegistry". Once the connection is successful you will see a connection in the Connections tab in the upper right corner of Rstudio.
+For this function you will need to provide the server name in which you are hosting the SSMS application (varies by setup of the SSMS application) and then the database in which you would like to connect to. In our case the database we want to connect to is the "FracFocusRegistry". Once the connection is successful you will see a connection in the Connections tab in the upper right corner of Rstudio.
 
 ![R Connection](Final_Proj_Images/Connecntion_SC.JPG)
 
 
-Now that a connection has been established to the FracFoucsRegistry in R through the SSMS application, we can now call in data from the FracFoucsRegistry into R. This can be done using the "dbGetQuery" function from the odbc package. This function uses the connection made from above, inconjuction with the SQL syntax you would use to query data in the SSMS application. Referring back to the 'Acetic Acid' query earlier, to bring those results into R as a data table the following code can be used.
+Now that a connection has been established to the FracFoucsRegistry in R through the SSMS application, we can now call in data from the FracFoucsRegistry directly into R. This can be done using the "dbGetQuery" function from the odbc package. This function uses the connection made from above, inconjuction with the SQL syntax you would use to query data in the SSMS application. Referring back to the 'Acetic Acid' query earlier, to bring those results into R as a data table the following code can be used.
 
 
 First install the "data.table" package
@@ -95,7 +95,7 @@ install.packages("data.table")
 library(data.table)
 ```
 
-Call the connection to the database "con" followed by the same SQL syntax used to query data in the SSMS.
+Next, call the connection to the database (previously "con") followed by the same SQL syntax used to query the data in SSMS.
 
 ```
 AceticAcid <- data.table(dbGetQuery(con, "SELECT * FROM RegistryUploadIngredients Where IngredientName = 'Acetic Acid';"))
@@ -176,7 +176,7 @@ new_RUI <- RUI %>%
   filter(PercentHFJob != "0", PercentHFJob < "30")
 ```
 
-Finally a function was developed that in summary, compliles all values from the PercentHFJob column that match the ingredient name of interest that is entered into the function. The fucntion then performs anlaysis that reports the mean weight percentage, minimum value, maximum value, a series of percentiled vaules and finally counts how many data points (entries for the specific ingredient) that were used to calculate these values. The function then reports this data in a data table.
+Finally a function was developed that in summary, compliles all values from the PercentHFJob column that match the ingredient name of interest that is entered into the function. The function then performs anlaysis that reports the mean weight percentage, minimum value, maximum value, a series of percentiled vaules and finally counts how many data points (entries for the specific ingredient) that were used to calculate these values. The function then reports this data in a data table.
 
 ```
 ing_report <- function(ingredient){
@@ -226,7 +226,7 @@ We can see from the figure produced by the function that the mean weight percent
 
 ## Deployment/Usage
 
-The results of these functions are applicable for focusing research efforts in the field of hydraulic fracturing. The purpose report function is extremly useful when considering what ingredients are popular in the industry. We can now simply search the most frequently reported TradeName (produced from the purpose report function) online and in most cases the operator of that ingredient will supply additonal information. For example, we can see above that the most disclosed breaker reported in the FracFocus registry is the Vicon NF Breaker. A google search yields this breaker was synthesized by Halliburton and a suite of other information is available on this specific breaker. When considering the ingredient report function, this is primarily applicable to my research. My research includes synthesizing batches of hydraulic fracturing fluid for various fluid rock experiments. When changing the concentration of an ingredient in my fracturing fluid, I can now use this function to see what concentrationa a specific ingredient is being used in the industry. This makes designing future experiments much easier and more streamlined.
+The results of these functions are applicable for focusing research efforts in the field of hydraulic fracturing. The purpose report function is extremly useful when considering what ingredients are popular in the industry. We can now simply search the most frequently reported TradeName (produced from the purpose report function) online and in most cases the operator of that ingredient will supply additonal information. For example, we can see above that the most disclosed breaker reported in the FracFocus registry is the Vicon NF Breaker. A google search yields this breaker was synthesized by Halliburton and a suite of other information is available on this specific breaker. When considering the ingredient report function, this is primarily applicable to my research. My research includes synthesizing batches of hydraulic fracturing fluid for various fluid rock experiments. When changing the concentration of an ingredient in my fracturing fluid, I can now use this function to see what concentrations a specific ingredient is being used in the industry. This makes designing future experiments much easier and more streamlined.
 
 ## Authors
 
